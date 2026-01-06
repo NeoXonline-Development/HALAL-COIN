@@ -1,0 +1,23 @@
+{
+  "network": "mainnet",
+  "token": {
+    "name": "HALAL COIN",
+    "symbol": "HLLCN",
+    "decimals": 3
+  },
+  "addresses": {
+    "jetton_master": "TBD",
+    "admin": "TBD"
+  },
+  "transactions": {
+    "deploy": "TBD",
+    "initial_mint": "TBD",
+    "transfer_admin": "TBD",
+    "revoke_or_close_mint": "TBD"
+  },
+  "metadata": {
+    "jetton_json": "https://raw.githubusercontent.com/NeoXonline-Development/HALAL-COIN/main/metadata/jetton.json",
+    "logo": "TBD"
+  },
+  "notes": "Fill the TBD fields after deployment."
+}
