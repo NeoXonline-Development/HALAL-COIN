@@ -2,6 +2,11 @@
   "name": "HALAL COIN",
   "symbol": "HLLCN",
   "decimals": 3,
-  "description": "TODO: короткое описание токена (1-2 строки).",
-  "image": "TODO: URL на logo."
+  "description": "HALAL COIN (HLLCN) jetton token. Public metadata repository.",
+  "image": "",
+  "website": "https://neoxonline.com",
+  "social": {
+    "github": "https://github.com/NeoXonline-Development/HALAL-COIN"
+  }
 }
+
