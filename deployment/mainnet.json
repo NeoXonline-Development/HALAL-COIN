@@ -15,9 +15,9 @@
     "transfer_admin": "TBD",
     "revoke_or_close_mint": "TBD"
   },
-  "metadata": {
+   "metadata": {
     "jetton_json": "https://raw.githubusercontent.com/NeoXonline-Development/HALAL-COIN/main/metadata/jetton.json",
-    "logo": "TBD"
+    "logo": ""
   },
-  "notes": "Fill the TBD fields after deployment."
+    "notes": "Fill the TBD fields after deployment. Logo URL will be added later."
 }
