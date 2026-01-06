@@ -1,9 +1,13 @@
 {
   "name": "HALAL COIN",
   "symbol": "HLLCN",
-  "decimals": 3,
-  "description": "HALAL COIN (HLLCN) jetton token. Public metadata repository.",
+  "decimals": "3",
+  "description": "HALAL COIN (HLLCN) - Shariah-compliant decentralized token for fair exchange and commerce.",
   "image": "",
+  "image_data": "",
+  "admin": "UQBhrm5E2njlRRCvJbOAuO0Sp-o7HHEsWaiSoDhI6CiDFZuO",
+  "total_supply": "100000000000",
+  "mintable": true,
   "website": "https://neoxonline.com",
   "social": {
     "github": "https://github.com/NeoXonline-Development/HALAL-COIN"

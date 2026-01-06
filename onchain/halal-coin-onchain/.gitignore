@@ -1,0 +1,34 @@
+node_modules
+temp
+build
+dist
+.DS_Store
+package.ts
+
+# Environment variables with sensitive data
+.env
+.env.*
+!.env.example
+
+# Sensitive keys and seeds
+*.seed
+*.mnemonic
+*.key
+*.pem
+
+# VS Code
+.vscode/*
+.history/
+*.vsix
+
+# IDEA files
+.idea
+
+# VIM
+Session.vim
+.vim/
+
+# Other private editor folders
+.nvim/
+.emacs/
+.helix/
