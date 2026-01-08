@@ -21,9 +21,30 @@ Save and publish:
 - If token will be changed later: DO NOT revoke ownership yet.
 - If fixed supply and no further changes: revoke/disable minting after final checks.
 
-## Mainnet references (fill after deploy)
-- Jetton Master: TBD
-- Deploy tx: TBD
-- Admin address: TBD
-- Admin transfer tx: TBD
-- Revoke/close mint tx: TBD
+## Mainnet Deployment ✅
+
+**Deployment Date:** January 8, 2026
+
+### Contract Addresses
+- **Jetton Master:** `EQBBaBRT2ozwbZsntfTJKMgEK2Sfj9WksE8z_9wktS6Rea3z`
+- **Admin Address:** `UQCRSOwlZATn9aOeW09LYGp3iYJLa1NJuyWf5No6DMup6Srx`
+
+### Explorers
+- TONScan: https://tonscan.org/address/EQBBaBRT2ozwbZsntfTJKMgEK2Sfj9WksE8z_9wktS6Rea3z
+- TONViewer: https://tonviewer.com/EQBBaBRT2ozwbZsntfTJKMgEK2Sfj9WksE8z_9wktS6Rea3z
+
+### Supply Configuration
+- **Maximum Supply (Cap):** 200,000,000 HLLCN
+- **Initial Circulation:** 100,000,000 HLLCN
+- **Reserved for Future:** 100,000,000 HLLCN
+
+### Token Features
+- ✅ Mintable (owner can mint more tokens within cap)
+- ✅ Metadata updatable (owner can update token info)
+- ✅ Ownership transferable (owner can change admin)
+- ✅ Burnable (users can burn their tokens)
+- ⚠️ Immutable code (contract logic cannot be changed)
+
+### Security
+- Smart contract code: https://github.com/NeoXonline-Development/HALAL-COIN
+- Metadata: https://raw.githubusercontent.com/NeoXonline-Development/HALAL-COIN/main/metadata/jetton.json
