@@ -1,133 +1,127 @@
 # HALAL COIN - Testnet Deployment Guide
 
-## ✅ Готовность проекта
+## ✅ Project Readiness
 
-Все компоненты готовы:
-- ✅ Контракты скомпилированы
-- ✅ Тесты пройдены (8/8)
-- ✅ Скрипты деплоя настроены
-- ✅ Metadata подготовлен
+All components are ready:
+- ✅ Contracts compiled
+- ✅ Tests passed (8/8)
+- ✅ Deployment scripts configured
+- ✅ Metadata prepared
 
-## 📋 Параметры токена
+## 📋 Token Parameters
 
-- **Название:** HALAL COIN
-- **Символ:** HLLCN
+- **Name:** HALAL COIN
+- **Symbol:** HLLCN
 - **Decimals:** 3
-- **Total Supply:** 100,000,000 HLLCN (100,000,000,000 с decimals)
-- **Admin:** `UQBhrm5E2njlRRCvJbOAuO0Sp-o7HHEsWaiSoDhI6CiDFZuO`
-- **Deployer:** `UQDzmHXuxUSbXYpHLLC1_CeMjlezGI0hTWZSuuelx_vq882Z`
-- **Mintable:** Да (с возможностью изменений)
+- **Total Supply:** 100,000,000 HLLCN (100,000,000,000 with decimals)
+- **Admin/Deployer:** `0QCXmE4pmJLiJjekrTMh7vbDUxNwXbLO-hdY_7DsY6LPFiID` (single wallet for everything)
+- **Mintable:** Yes (with ability to change)
 
-## 🚀 Деплой на Testnet
+## 🚀 Testnet Deployment
 
-### Шаг 1: Подготовка
+### Step 1: Preparation
 
-1. Убедитесь что у deployer wallet есть testnet TON (минимум 1 TON)
-   - Получить testnet TON: https://t.me/testgiver_ton_bot
+1. Ensure deployer wallet has testnet TON (minimum 1 TON)
+   - Get testnet TON: https://t.me/testgiver_ton_bot
 
-2. Настройте TON wallet в Blueprint:
+2. Configure TON wallet in Blueprint:
    ```powershell
    cd "c:\Users\kenih\OneDrive\Рабочий стол\HALAL-COIN\onchain\halal-coin-onchain"
    ```
 
-### Шаг 2: Деплой Jetton Master контракта
+### Step 2: Deploy Jetton Master Contract
 
-Запустите скрипт деплоя:
+Run deployment script:
 ```powershell
 npx blueprint run deployJettonController --testnet
 ```
 
-Скрипт:
-- Задеплоит Jetton Master контракт
-- Установит admin адрес
-- Настроит metadata URI
-- Выведет адрес контракта
+The script will:
+- Deploy Jetton Master contract
+- Set admin address
+- Configure metadata URI
+- Output contract address
 
-**Сохраните адрес Jetton Master!**
+**Save the Jetton Master address!**
 
-### Шаг 3: Минтинг токенов
+### Step 3: Minting Tokens
 
-После успешного деплоя, заминтите 100M токенов:
+After successful deployment, mint 100M tokens:
 
 ```powershell
 npx blueprint run mintTokens --testnet
 ```
 
-Когда запросит Jetton Master адрес, введите адрес из Шага 2.
+When prompted for Jetton Master address, enter the address from Step 2.
 
-Скрипт:
-- Отправит 100,000,000 HLLCN на admin адрес
-- Создаст Jetton Wallet для admin
-- Подтвердит транзакцию
+The script will:
+- Send 100,000,000 HLLCN to admin address
+- Create Jetton Wallet for admin
+- Confirm transaction
 
-### Шаг 4: Проверка
+### Step 4: Verification
 
-1. **Проверьте контракт на explorer:**
+1. **Check contract on explorer:**
    ```
    https://testnet.tonviewer.com/<JETTON_MASTER_ADDRESS>
    ```
 
-2. **Получите адрес вашего Jetton Wallet:**
-   - Вызовите get-метод `get_wallet_address` с admin адресом
-   - Или проверьте в транзакциях минтинга
+2. **Get your Jetton Wallet address:**
+   - Call get-method `get_wallet_address` with admin address
+   - Or check in minting transactions
 
-3. **Проверьте баланс:**
+3. **Check balance:**
    ```
    https://testnet.tonviewer.com/<YOUR_JETTON_WALLET_ADDRESS>
    ```
 
-## 🔍 Тестирование на Testnet
+## 🔍 Testnet Testing
 
-### Проверка функций:
+### Function Testing:
 
-1. **Mint (дополнительный):**
-   - Отправьте Mint message с admin wallet
-   - Укажите получателя и количество
+1. **Mint (additional):**
+   - Send Mint message from admin wallet
+   - Specify receiver and amount
 
 2. **Transfer:**
-   - Откройте свой Jetton Wallet
-   - Отправьте JettonTransfer на другой адрес
-   - Проверьте баланс получателя
+   - Open your Jetton Wallet
+   - Send JettonTransfer to another address
+   - Check receiver's balance
 
 3. **Burn:**
-   - Отправьте JettonBurn message
-   - Проверьте что totalSupply уменьшился
+   - Send JettonBurn message
+   - Verify that totalSupply decreased
 
 4. **Change Owner:**
-   - Отправьте ChangeOwner message
-   - Проверьте что новый owner может минтить
+   - Send ChangeOwner message
+   - Verify that new owner can mint
 
-## 🎯 После успешного тестирования
+## 🎯 After Successful Testing
 
-Когда убедитесь что всё работает на testnet:
+Once you've verified everything works on testnet:
 
 ### Mainnet Deployment
 
 ```powershell
-# 1. Убедитесь что deployer wallet имеет ~2 TON на mainnet
-# 2. Деплой на mainnet
+# 1. Ensure deployer wallet has ~2 TON on mainnet
+# 2. Deploy to mainnet
 npx blueprint run deployJettonController --mainnet
 
-# 3. Минтинг на mainnet
+# 3. Mint on mainnet
 npx blueprint run mintTokens --mainnet
 ```
 
-### Обновите документацию:
+### Update Documentation:
 
-1. Запишите адреса в [`deployment/mainnet.json`](../deployment/mainnet.json)
-2. Добавьте transaction hashes
-3. Обновите README с deployed адресами
+1. Record addresses in [`deployment/mainnet.json`](../deployment/mainnet.json)
+2. Add transaction hashes
+3. Update README with deployed addresses
 
-## 🔑 Важные адреса
+## 🔑 Important Addresses
 
-**Admin Wallet:**
+**Admin/Deployer Wallet (testnet):**
 ```
-UQBhrm5E2njlRRCvJbOAuO0Sp-o7HHEsWaiSoDhI6CiDFZuO
-```
-
-**Deployer Wallet:**
-```
-UQDzmHXuxUSbXYpHLLC1_CeMjlezGI0hTWZSuuelx_vq882Z
+0QCXmE4pmJLiJjekrTMh7vbDUxNwXbLO-hdY_7DsY6LPFiID
 ```
 
 ## 📝 Metadata
@@ -137,33 +131,64 @@ UQDzmHXuxUSbXYpHLLC1_CeMjlezGI0hTWZSuuelx_vq882Z
 https://raw.githubusercontent.com/NeoXonline-Development/HALAL-COIN/main/metadata/jetton.json
 ```
 
-**Для добавления logo:**
-1. Создайте изображение (PNG/SVG, 256x256px+)
-2. Загрузите на IPFS или GitHub
-3. Обновите `image` поле в jetton.json
-4. Вызовите `JettonUpdateContent` message от admin
+**To add logo:**
+1. Create image (PNG/SVG, 256x256px+)
+2. Upload to IPFS or GitHub
+3. Update `image` field in jetton.json
+4. Call `JettonUpdateContent` message from admin
 
-## ⚠️ Безопасность
+## ⚠️ Security
 
-- ✅ Храните seed phrases admin и deployer кошельков в безопасности
-- ✅ Используйте hardware wallet для mainnet операций
-- ✅ Проверяйте все транзакции перед подтверждением
-- ✅ Тестируйте на testnet перед mainnet
-- ✅ Не делитесь private keys
+- ✅ Keep seed phrases of admin and deployer wallets secure
+- ✅ Use hardware wallet for mainnet operations
+- ✅ Verify all transactions before confirmation
+- ✅ Test on testnet before mainnet
+- ✅ Never share private keys
+
+### 🚨 IMPORTANT: DisableMint Function
+
+**⚠️ IRREVERSIBLE ACTION!** The `DisableMint` function completely disables minting ability forever.
+
+**Protection against accidental calls:**
+- Requires special confirmation code: `0xDEADC0DE` (hex for "dead code")
+- Without correct code, function will not work
+
+**When NOT to use:**
+- ❌ If token should remain mintable (like HALAL COIN)
+- ❌ When transferring rights to client (leave minting ability)
+- ❌ If not 100% certain
+
+**When to use:**
+- ✅ Only if supply needs to be fixed forever
+- ✅ After final minting for "fair launch"
+- ✅ By explicit client requirement
+
+**Example call (if really needed):**
+```typescript
+await jettonController.send(
+    admin.getSender(),
+    { value: toNano('0.1') },
+    {
+        $$type: 'DisableMint',
+        queryId: 0n,
+        confirmationCode: 0xDEADC0DEn, // Required!
+    }
+);
+```
 
 ## 📞 Troubleshooting
 
-**Ошибка "Insufficient funds":**
-- Пополните deployer wallet на testnet
+**Error "Insufficient funds":**
+- Top up deployer wallet on testnet
 
-**Ошибка "Contract not deployed":**
-- Подождите 10-15 секунд после деплоя
-- Проверьте адрес контракта
+**Error "Contract not deployed":**
+- Wait 10-15 seconds after deployment
+- Check contract address
 
-**Ошибка "Only owner can mint":**
-- Убедитесь что отправляете от admin адреса
-- Проверьте что используете правильный wallet
+**Error "Only owner can mint":**
+- Ensure sending from admin address
+- Verify using correct wallet
 
-## 🎊 Готово!
+## 🎊 Ready!
 
-Проект полностью настроен и готов к деплою. Следуйте шагам выше для testnet деплоя.
+Project is fully configured and ready for deployment. Follow steps above for testnet deployment.

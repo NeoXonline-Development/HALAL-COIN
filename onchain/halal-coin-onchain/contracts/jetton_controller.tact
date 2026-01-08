@@ -74,9 +74,11 @@ message Mint {
     forwardPayload: Slice as remaining;
 }
 
-/// Disable minting permanently (only owner)
+/// ⚠️ WARNING: Disable minting permanently (only owner, IRREVERSIBLE!)
+/// Requires confirmation code 0xDEADC0DE ("dead code") to prevent accidental use
 message DisableMint {
     queryId: Int as uint64;
+    confirmationCode: Int as uint32; // Must be 0xDEADC0DE to confirm
 }
 
 /// Request wallet address for a given owner
@@ -200,10 +202,12 @@ contract JettonController with Deployable {
         self.owner = msg.newOwner;
     }
 
-    // Disable minting permanently (only owner, irreversible)
+    // ⚠️ WARNING: Disable minting permanently (only owner, IRREVERSIBLE!)
+    // Requires confirmation code 0xDEADC0DE ("dead code") to prevent accidental use
     receive(msg: DisableMint) {
         require(sender() == self.owner, "Only owner can disable mint");
         require(self.mintable, "Minting already disabled");
+        require(msg.confirmationCode == 0xDEADC0DE, "Wrong confirmation code! Use 0xDEADC0DE to confirm");
         self.mintable = false;
     }
 

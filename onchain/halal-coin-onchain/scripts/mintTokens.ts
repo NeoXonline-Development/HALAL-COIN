@@ -1,11 +1,12 @@
 import { Address, beginCell, toNano } from '@ton/core';
 import { JettonController } from '../build/JettonController/JettonController_JettonController';
 import { NetworkProvider } from '@ton/blueprint';
+import { CONFIG, getAdminAddress } from '../config';
 
 export async function run(provider: NetworkProvider) {
     const JETTON_MASTER_ADDRESS = Address.parse(await provider.ui().input('Enter Jetton Master address'));
-    const ADMIN_ADDRESS = Address.parse('UQBhrm5E2njlRRCvJbOAuO0Sp-o7HHEsWaiSoDhI6CiDFZuO');
-    const MINT_AMOUNT = 100_000_000_000n; // 100 million HLLCN (with decimals=3)
+    const ADMIN_ADDRESS = getAdminAddress();
+    const MINT_AMOUNT = CONFIG.TOKEN.TOTAL_SUPPLY;
 
     console.log('🪙 Minting HALAL COIN tokens...');
     console.log('📊 Parameters:');

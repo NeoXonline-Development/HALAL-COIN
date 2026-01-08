@@ -1,15 +1,13 @@
-import { Address, beginCell, toNano } from '@ton/core';
+import { beginCell, toNano } from '@ton/core';
 import { JettonController } from '../build/JettonController/JettonController_JettonController';
 import { NetworkProvider } from '@ton/blueprint';
+import { CONFIG, getAdminAddress, getMetadataUrl } from '../config';
 
 export async function run(provider: NetworkProvider) {
-    // HALAL COIN Parameters
-    const TOTAL_SUPPLY = 100_000_000_000n; // 100 million tokens with decimals=3 (100,000,000 * 1000 = 100,000,000,000)
-    const ADMIN_ADDRESS = Address.parse('UQBhrm5E2njlRRCvJbOAuO0Sp-o7HHEsWaiSoDhI6CiDFZuO');
-    
-    // Jetton Content (TEP-64 Off-chain metadata)
-    // Using off-chain metadata URL (will be updated when logo is added)
-    const METADATA_URL = 'https://raw.githubusercontent.com/NeoXonline-Development/HALAL-COIN/main/metadata/jetton.json';
+    // Load configuration from config.ts
+    const TOTAL_SUPPLY = CONFIG.TOKEN.TOTAL_SUPPLY;
+    const ADMIN_ADDRESS = getAdminAddress();
+    const METADATA_URL = getMetadataUrl();
     const jettonContent = beginCell()
         .storeUint(0x01, 8) // off-chain content flag
         .storeStringTail(METADATA_URL)

@@ -295,6 +295,7 @@ describe('JettonController', () => {
             {
                 $$type: 'DisableMint',
                 queryId: 10n,
+                confirmationCode: 0xDEADC0DEn, // Required confirmation code
             }
         );
 
@@ -338,6 +339,7 @@ describe('JettonController', () => {
             {
                 $$type: 'DisableMint',
                 queryId: 12n,
+                confirmationCode: 0xDEADC0DEn, // Even with correct code, non-owner cannot disable
             }
         );
 
