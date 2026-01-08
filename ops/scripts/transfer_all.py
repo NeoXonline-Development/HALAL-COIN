@@ -3,7 +3,7 @@ import os
 from decimal import Decimal
 
 from tonutils.client import ToncenterV3Client
-from tonutils.wallet import WalletV4R2
+from tonutils.wallet import WalletV5R1
 from tonutils.wallet.messages import TransferJettonMessage
 
 
@@ -18,7 +18,7 @@ async def main() -> None:
     network = os.getenv("NETWORK", "testnet").lower()
     is_testnet = network != "mainnet"
 
-    mnemonic = _required("MNEMONIC")
+    mnemonic = _required("WALLET_MNEMONIC")
     jetton_master = _required("JETTON_MASTER_ADDRESS")
     destination = _required("DESTINATION_ADDRESS")
 
@@ -26,7 +26,7 @@ async def main() -> None:
     total_tokens = Decimal(_required("TOTAL_TOKENS"))
 
     client = ToncenterV3Client(is_testnet=is_testnet, rps=1, max_retries=1)
-    wallet, _, _, _ = WalletV4R2.from_mnemonic(client, mnemonic)
+    wallet, _, _, _ = WalletV5R1.from_mnemonic(client, mnemonic)
 
     # NOTE: tonutils converts with decimals. Keep TOTAL_TOKENS in "human" units.
     tx = await wallet.transfer_message(

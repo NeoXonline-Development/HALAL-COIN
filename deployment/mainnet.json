@@ -6,8 +6,8 @@
     "decimals": 3
   },
   "addresses": {
-    "jetton_master": "TBD",
-    "admin": "TBD"
+    "jetton_master": "EQBBaBRT2ozwbZsntfTJKMgEK2Sfj9WksE8z_9wktS6Rea3z",
+    "admin": "UQCRSOwlZATn9aOeW09LYGp3iYJLa1NJuyWf5No6DMup6Srx"
   },
   "transactions": {
     "deploy": "TBD",

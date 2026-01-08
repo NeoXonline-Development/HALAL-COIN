@@ -4,7 +4,7 @@ import os
 from pytoniq_core import Address
 from tonutils.client import ToncenterV3Client
 from tonutils.jetton import JettonMasterStandard
-from tonutils.wallet import WalletV4R2
+from tonutils.wallet import WalletV5R1
 
 
 def _required(name: str) -> str:
@@ -18,12 +18,12 @@ async def main() -> None:
     network = os.getenv("NETWORK", "testnet").lower()
     is_testnet = network != "mainnet"
 
-    mnemonic = _required("MNEMONIC")
+    mnemonic = _required("WALLET_MNEMONIC")
     jetton_master = _required("JETTON_MASTER_ADDRESS")
     new_admin = _required("NEW_ADMIN_ADDRESS")
 
     client = ToncenterV3Client(is_testnet=is_testnet, rps=1, max_retries=1)
-    wallet, _, _, _ = WalletV4R2.from_mnemonic(client, mnemonic)
+    wallet, _, _, _ = WalletV5R1.from_mnemonic(client, mnemonic)
 
     body = JettonMasterStandard.build_change_admin_body(
         new_admin_address=Address(new_admin),

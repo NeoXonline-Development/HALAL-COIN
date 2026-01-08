@@ -1,49 +1,59 @@
+import asyncio
+import os
+from decimal import Decimal
+
 from pytoniq_core import Address, begin_cell
 
 from tonutils.client import ToncenterV3Client
 from tonutils.jetton import JettonMasterStandard, JettonWalletStandard
-from tonutils.wallet import WalletV4R2
+from tonutils.wallet import WalletV5R1
 
-# Set to True for the test network, False for the main network
-IS_TESTNET = True
 
-# Mnemonic phrase
-MNEMONIC = "word1 word2 word3 ..."
-
-# The address of the Jetton Master contract
-JETTON_MASTER_ADDRESS = "EQ..."
-
-# Number of decimal places for the Jetton
-JETTON_DECIMALS = 9
-
-# Amount of Jettons to transfer (in base units, considering decimals)
-JETTON_AMOUNT = 0.01
-
-# The address of the recipient
-DESTINATION_ADDRESS = "UQ..."
-
-# Comment to include in the transfer payload
-COMMENT = "Hello from tonutils!"
+def _required(name: str) -> str:
+    v = os.getenv(name)
+    if not v:
+        raise RuntimeError(f"Missing env var: {name}")
+    return v
 
 
 async def main() -> None:
-    client = ToncenterV3Client(is_testnet=IS_TESTNET, rps=1, max_retries=1)
-    wallet, _, _, _ = WalletV4R2.from_mnemonic(client, MNEMONIC)
+    # Set network from environment variable (testnet or mainnet)
+    network = os.getenv("NETWORK", "testnet").lower()
+    is_testnet = network != "mainnet"
+
+    # Load configuration from environment variables
+    mnemonic = _required("WALLET_MNEMONIC")
+    jetton_master = _required("JETTON_MASTER_ADDRESS")
+    destination = _required("DESTINATION_ADDRESS")
+    
+    # Jetton decimals (default: 3 for HALAL COIN)
+    decimals = int(os.getenv("JETTON_DECIMALS", "3"))
+    
+    # Amount of jettons to transfer (in human-readable units, e.g., 0.01)
+    jetton_amount = Decimal(os.getenv("JETTON_AMOUNT", "0.01"))
+    
+    # Optional comment for the transfer
+    comment = os.getenv("COMMENT", "Transfer from tonutils")
+    # Optional comment for the transfer
+    comment = os.getenv("COMMENT", "Transfer from tonutils")
+
+    client = ToncenterV3Client(is_testnet=is_testnet, rps=1, max_retries=1)
+    wallet, _, _, _ = WalletV5R1.from_mnemonic(client, mnemonic)
 
     jetton_wallet_address = await JettonMasterStandard.get_wallet_address(
         client=client,
         owner_address=wallet.address.to_str(),
-        jetton_master_address=JETTON_MASTER_ADDRESS,
+        jetton_master_address=jetton_master,
     )
 
     body = JettonWalletStandard.build_transfer_body(
-        recipient_address=Address(DESTINATION_ADDRESS),
+        recipient_address=Address(destination),
         response_address=wallet.address,
-        jetton_amount=int(JETTON_AMOUNT * (10 ** JETTON_DECIMALS)),
+        jetton_amount=int(jetton_amount * (10 ** decimals)),
         forward_payload=(
             begin_cell()
             .store_uint(0, 32)  # Text comment opcode
-            .store_snake_string(COMMENT)
+            .store_snake_string(comment)
             .end_cell()
         ),
         forward_amount=1,
@@ -55,11 +65,8 @@ async def main() -> None:
         body=body,
     )
 
-    print(f"Successfully transferred {JETTON_AMOUNT} jettons!")
+    print(f"Successfully transferred {jetton_amount} jettons!")
     print(f"Transaction hash: {tx_hash}")
 
-
 if __name__ == "__main__":
-    import asyncio
-
     asyncio.run(main())
